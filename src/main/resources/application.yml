@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: statistics_ms
+
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+
+
+  flyway:
+    enabled: true
+    baselineOnMigrate: true
+    locations: classpath:db/migration
+    url: ${spring.datasource.url}
+    schemas: qms_report
+    user: ${spring.datasource.username}
+    password: ${spring.datasource.password}
+
+  jpa.:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+server:
+  port: 85
+
+logging:
+  level:
+    javax.net.ssl: DEBUG

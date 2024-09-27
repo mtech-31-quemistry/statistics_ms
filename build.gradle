@@ -1,0 +1,118 @@
+plugins {
+	id 'java'
+	id 'jacoco'
+	id 'org.springframework.boot' version '3.3.0'
+	id 'io.spring.dependency-management' version '1.1.5'
+	id "org.sonarqube" version '4.4.1.3373'
+	id "org.flywaydb.flyway" version "10.15.2"
+}
+
+group = 'com.quemistry'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	sourceCompatibility = '21'
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+
+	testCompile {
+		/* only junit 5 should be used */
+		exclude group: 'junit', module: 'junit'
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+	testRuntime {
+		/* only junit 5 should be used */
+		exclude group: 'junit', module: 'junit'
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+
+}
+
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+	implementation 'org.flywaydb:flyway-core'
+	implementation 'org.mapstruct:mapstruct:1.5.5.Final'
+
+	compileOnly 'org.projectlombok:lombok'
+
+	annotationProcessor 'org.projectlombok:lombok'
+	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
+
+	runtimeOnly "org.springframework.boot:spring-boot-starter-actuator"
+	runtimeOnly 'org.postgresql:postgresql'
+	runtimeOnly 'org.flywaydb:flyway-database-postgresql'
+
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.junit.jupiter:junit-jupiter-api'
+}
+
+test {
+	useJUnitPlatform()
+	finalizedBy jacocoTestReport
+}
+
+jacocoTestReport {
+	dependsOn test
+
+	reports {
+		xml.required = true
+	}
+
+	afterEvaluate {
+		excludedClassFilesForReport(classDirectories)
+
+	}
+}
+
+private excludedClassFilesForReport(classDirectories) {
+	classDirectories.setFrom(files(classDirectories.files.collect {
+		fileTree(dir: it, exclude: [
+				'**/entity/*.class',
+				'**/model/**/*.class',
+				'**/model/*.class',
+				'**/entity/**/*.class',
+				'**/Application.class',
+				'**/constant/**/*.class',
+				'**/constant/*.class'
+		])
+	}))
+}
+
+bootJar {
+	archiveFileName = "statistics_ms.jar"
+	archiveClassifier.set(null)
+}
+
+tasks.register('installLocalGitHook', Copy) {
+	from new File(rootProject.rootDir, 'scripts/pre-commit')
+	into { new File(rootProject.rootDir, '.git/hooks') }
+	fileMode 0775
+}
+
+build {
+	finalizedBy("installLocalGitHook")
+}
+
+sonar {
+	properties {
+		property "sonar.projectKey", "mtech-31-quemistry_statistics_ms"
+		property "sonar.organization", "mtech-31-quemistry"
+		property "sonar.host.url", "https://sonarcloud.io"
+		property "sonar.coverage.exclusions", "**/entity/*,**/model/**/*,**/model/*,**/entity/**/*,**/Application,**/constant/**/*,**/constant/*,com/quemistry/statistics_ms/exception/ExceptionResponse"
+	}
+}
+
