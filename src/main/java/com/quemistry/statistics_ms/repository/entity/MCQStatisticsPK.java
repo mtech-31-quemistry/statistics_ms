@@ -1,4 +1,4 @@
-package com.quemistry.statistics_ms.entity;
+package com.quemistry.statistics_ms.repository.entity;
 
 import jakarta.persistence.Id;
 

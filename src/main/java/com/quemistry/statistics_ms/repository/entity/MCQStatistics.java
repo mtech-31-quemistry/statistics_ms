@@ -1,11 +1,17 @@
-package com.quemistry.statistics_ms.entity;
+package com.quemistry.statistics_ms.repository.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name ="mcq_stats")
 @IdClass(MCQStatisticsPK.class)
 public class MCQStatistics {
