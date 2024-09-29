@@ -57,6 +57,7 @@ dependencies {
 	runtimeOnly 'org.flywaydb:flyway-database-postgresql'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'com.h2database:h2:2.3.230' // Replace with the latest version
 	testImplementation 'org.junit.jupiter:junit-jupiter-api'
 }
 
