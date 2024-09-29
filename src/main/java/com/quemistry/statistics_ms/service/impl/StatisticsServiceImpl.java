@@ -26,7 +26,7 @@ public class StatisticsServiceImpl implements StatisticsService {
         statisticsResponse.setData(result.get().toList());
         statisticsResponse.setPageSize(pageSize);
         statisticsResponse.setPageNo(pageNo);
-
+        statisticsResponse.setTotalRecords(result.getTotalElements());
         return statisticsResponse;
     }
 }

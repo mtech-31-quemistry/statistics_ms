@@ -14,5 +14,6 @@ public class StatisticsResponse {
     private List<MCQStatisticsDto> data;
     private int pageNo;
     private int pageSize;
+    private long totalRecords;
 
 }

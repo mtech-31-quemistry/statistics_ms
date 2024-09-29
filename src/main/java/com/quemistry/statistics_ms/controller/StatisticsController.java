@@ -20,7 +20,7 @@ public class StatisticsController {
     }
 
     @GetMapping("mcq")
-    public ResponseEntity<StatisticsResponse> getStatistics(@RequestBody StatisticsRequest request){
+    public ResponseEntity<StatisticsResponse> getMcqStatistics(@RequestBody StatisticsRequest request){
         var result = statisticsService.retrieveMcqStatics(request.getPageNo(), request.getPageSize());
         return ResponseEntity.ok(result);
     }
