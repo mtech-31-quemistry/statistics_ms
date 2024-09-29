@@ -29,7 +29,7 @@ public class StatisticsServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
     }
     @Test
     void testRetrieveMcqStatistic(){
