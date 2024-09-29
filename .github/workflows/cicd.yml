@@ -1,4 +1,4 @@
-name: Quiz Microservice CICD
+name: Statistics MS
 
 on:
   push:
@@ -51,66 +51,66 @@ jobs:
       - name: Run unit tests
         run: ./gradlew test
 
-  build_and_push_image:
-    needs: code_scan
-    name: Push Docker Image to ECR
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: ${{ env.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ env.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ env.AWS_REGION }}
-
-      - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v2
-
-      - name: Build and Push Image
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          file: ./Dockerfile
-          push: true
-          tags: |
-            ${{ env.IMAGE_NAME }}
-            ${{ env.LATEST_IMAGE_NAME }}
-
-  deploy_to_ecs:
-    name: Deploy to ECS
-    needs: build_and_push_image
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: ${{ env.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ env.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ env.AWS_REGION }}
-
-      - name: Fill in the new image ID in the Amazon ECS task definition
-        id: task-def
-        uses: aws-actions/amazon-ecs-render-task-definition@v1
-        with:
-          task-definition: aws/task-definition.json
-          container-name: statistics_ms
-          image: ${{ env.IMAGE_NAME }}
-
-      - name: Deploy Amazon ECS task definition
-        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
-        with:
-          task-definition: ${{ steps.task-def.outputs.task-definition }}
-          service: quiz-ms
-          cluster: quemistry-ms
-          wait-for-service-stability: false
+#  build_and_push_image:
+#    needs: code_scan
+#    name: Push Docker Image to ECR
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - name: Checkout
+#        uses: actions/checkout@v4
+#
+#      - name: Configure AWS credentials
+#        uses: aws-actions/configure-aws-credentials@v4
+#        with:
+#          aws-access-key-id: ${{ env.AWS_ACCESS_KEY_ID }}
+#          aws-secret-access-key: ${{ env.AWS_SECRET_ACCESS_KEY }}
+#          aws-region: ${{ env.AWS_REGION }}
+#
+#      - name: Login to Amazon ECR
+#        id: login-ecr
+#        uses: aws-actions/amazon-ecr-login@v2
+#
+#      - name: Build and Push Image
+#        uses: docker/build-push-action@v6
+#        with:
+#          context: .
+#          file: ./Dockerfile
+#          push: true
+#          tags: |
+#            ${{ env.IMAGE_NAME }}
+#            ${{ env.LATEST_IMAGE_NAME }}
+#
+#  deploy_to_ecs:
+#    name: Deploy to ECS
+#    needs: build_and_push_image
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Checkout
+#        uses: actions/checkout@v4
+#
+#      - name: Configure AWS credentials
+#        uses: aws-actions/configure-aws-credentials@v4
+#        with:
+#          aws-access-key-id: ${{ env.AWS_ACCESS_KEY_ID }}
+#          aws-secret-access-key: ${{ env.AWS_SECRET_ACCESS_KEY }}
+#          aws-region: ${{ env.AWS_REGION }}
+#
+#      - name: Fill in the new image ID in the Amazon ECS task definition
+#        id: task-def
+#        uses: aws-actions/amazon-ecs-render-task-definition@v1
+#        with:
+#          task-definition: aws/task-definition.json
+#          container-name: statistics_ms
+#          image: ${{ env.IMAGE_NAME }}
+#
+#      - name: Deploy Amazon ECS task definition
+#        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+#        with:
+#          task-definition: ${{ steps.task-def.outputs.task-definition }}
+#          service: quiz-ms
+#          cluster: quemistry-ms
+#          wait-for-service-stability: false
 
   code_scan:
     needs: tests
@@ -162,19 +162,19 @@ jobs:
           path: |
             build/reports/
             
-  zap_scan:
-    if: false
-    permissions: write-all
-    needs: deploy_to_ecs
-    runs-on: ubuntu-latest
-    name: Zap Scan
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          ref: main
-
-      - name: ZAP Scan
-        uses: zaproxy/action-full-scan@v0.10.0
-        with:
-          target: ${{ env.API_GATEWAY_URL }}
+#  zap_scan:
+#    if: false
+#    permissions: write-all
+#    needs: deploy_to_ecs
+#    runs-on: ubuntu-latest
+#    name: Zap Scan
+#    steps:
+#      - name: Checkout
+#        uses: actions/checkout@v4
+#        with:
+#          ref: main
+#
+#      - name: ZAP Scan
+#        uses: zaproxy/action-full-scan@v0.10.0
+#        with:
+#          target: ${{ env.API_GATEWAY_URL }}
