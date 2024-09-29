@@ -1,12 +1,11 @@
 package com.quemistry.statistics_ms.service.impl;
 
-import com.quemistry.statistics_ms.model.MCQStatisticsDto;
+import com.quemistry.statistics_ms.model.StatisticsResponse;
 import com.quemistry.statistics_ms.repository.McqStatisticsRepository;
 import com.quemistry.statistics_ms.service.StatisticsService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Slf4j
 @Service
@@ -19,13 +18,15 @@ public class StatisticsServiceImpl implements StatisticsService {
     }
 
     @Override
-    public List<MCQStatisticsDto> retrieveMcqStaticsForMonth(int year, int month) {
+    public StatisticsResponse retrieveMcqStatics(int pageNo, int pageSize) {
+        var paging = PageRequest.of(pageNo, pageSize);
 
-        return List.of();
-    }
+        var result = mcqStatisticsRepository.findTotalAttempt(paging);
+        StatisticsResponse statisticsResponse = new StatisticsResponse();
+        statisticsResponse.setData(result.get().toList());
+        statisticsResponse.setPageSize(pageSize);
+        statisticsResponse.setPageNo(pageNo);
 
-    @Override
-    public List<MCQStatisticsDto> retrieveMcqStatics() {
-        return mcqStatisticsRepository.findTotalAttempt();
+        return statisticsResponse;
     }
 }

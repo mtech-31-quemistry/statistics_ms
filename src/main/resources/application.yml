@@ -18,13 +18,24 @@ spring:
     user: ${spring.datasource.username}
     password: ${spring.datasource.password}
 
-  jpa.:
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+      base-path: /v1
+      path-mapping:
+        health: /stats/actuator
+  endpoint:
+    health:
+      show-details: never
+      enabled: true
+  health:
+    mail:
+      enabled: false
 
 server:
-  port: 85
+  port: 80
 
 logging:
   level:

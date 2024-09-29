@@ -1,14 +1,18 @@
 package com.quemistry.statistics_ms.model;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class StatisticsRequest {
-    private int pageNo = 0;
-    private int pageSize = 10;
+public class StatisticsResponse {
+
+    private List<MCQStatisticsDto> data;
+    private int pageNo;
+    private int pageSize;
+
 }
