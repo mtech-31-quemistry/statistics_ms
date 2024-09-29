@@ -54,36 +54,36 @@ jobs:
       - name: Run unit tests
         run: ./gradlew test
 
-#  build_and_push_image:
-#    needs: code_scan
-#    name: Push Docker Image to ECR
-#    runs-on: ubuntu-latest
-#
-#    steps:
-#      - name: Checkout
-#        uses: actions/checkout@v4
-#
-#      - name: Configure AWS credentials
-#        uses: aws-actions/configure-aws-credentials@v4
-#        with:
-#          aws-access-key-id: ${{ env.AWS_ACCESS_KEY_ID }}
-#          aws-secret-access-key: ${{ env.AWS_SECRET_ACCESS_KEY }}
-#          aws-region: ${{ env.AWS_REGION }}
-#
-#      - name: Login to Amazon ECR
-#        id: login-ecr
-#        uses: aws-actions/amazon-ecr-login@v2
-#
-#      - name: Build and Push Image
-#        uses: docker/build-push-action@v6
-#        with:
-#          context: .
-#          file: ./Dockerfile
-#          push: true
-#          tags: |
-#            ${{ env.IMAGE_NAME }}
-#            ${{ env.LATEST_IMAGE_NAME }}
-#
+  build_and_push_image:
+    needs: code_scan
+    name: Push Docker Image to ECR
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ env.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ env.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build and Push Image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: |
+            ${{ env.IMAGE_NAME }}
+            ${{ env.LATEST_IMAGE_NAME }}
+
 #  deploy_to_ecs:
 #    name: Deploy to ECS
 #    needs: build_and_push_image
