@@ -17,7 +17,7 @@
                 }
             ],
             "essential": true,
-            "environment": [
+            "secrets": [
                 {
                     "name": "DB_URL",
                     "valueFrom": "arn:aws:ssm:ap-southeast-1:730335183958:parameter/cicd/prod/postgre/database/url"
