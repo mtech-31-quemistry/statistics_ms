@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
@@ -52,13 +51,9 @@ public class StatisticsControllerTest {
         when(statisticsService.retrieveMcqStatics(pageNo, pageSize)).thenReturn(response);
 
         mockMvc.perform(get("/v1/stats/mcq")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("""
-                        {
-                            "pageNo": "0",
-                            "pageSize": "5"
-                        }
-                      """));
+                .param("pageno", "0")
+                .param("pagesize", "5")
+                );
 
         verify(statisticsService).retrieveMcqStatics(pageNo, pageSize);
     }
@@ -79,13 +74,9 @@ public class StatisticsControllerTest {
         when(statisticsService.retrieveTopicSkillStatics(pageNo, pageSize)).thenReturn(response);
 
         mockMvc.perform(get("/v1/stats/topic-skill")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("""
-                        {
-                            "pageNo": "0",
-                            "pageSize": "5"
-                        }
-                      """));
+                        .param("pageno", "0")
+                        .param("pagesize", "5")
+                );
 
         verify(statisticsService).retrieveTopicSkillStatics(pageNo, pageSize);
     }
