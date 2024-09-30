@@ -43,7 +43,7 @@ public class StatisticsControllerTest {
         List<MCQStatisticsDto> mcqStatisticsList = new ArrayList<>();
         mcqStatisticsList.add(new MCQStatisticsDto(1,10,9));
 
-        StatisticsResponse response = new StatisticsResponse();
+        StatisticsResponse<List<MCQStatisticsDto>> response = new StatisticsResponse<>();
         response.setPageSize(pageSize);
         response.setPageNo(pageNo);
         response.setTotalRecords(1);
@@ -70,7 +70,7 @@ public class StatisticsControllerTest {
         List<TopicSkillStatisticsDto> tsStatisticsList = new ArrayList<>();
         tsStatisticsList.add(new TopicSkillStatisticsDto(1,"topic A",1, "skill A", 10,9));
 
-        StatisticsResponse response = new StatisticsResponse();
+        StatisticsResponse<List<TopicSkillStatisticsDto>> response = new StatisticsResponse<>();
         response.setPageSize(pageSize);
         response.setPageNo(pageNo);
         response.setTotalRecords(1);

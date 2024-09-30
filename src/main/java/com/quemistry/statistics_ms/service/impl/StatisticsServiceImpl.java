@@ -5,7 +5,6 @@ import com.quemistry.statistics_ms.model.StatisticsResponse;
 import com.quemistry.statistics_ms.model.TopicSkillStatisticsDto;
 import com.quemistry.statistics_ms.repository.McqStatisticsRepository;
 import com.quemistry.statistics_ms.repository.TopicSkillStatisticsRepository;
-import com.quemistry.statistics_ms.repository.entity.MCQStatistics;
 import com.quemistry.statistics_ms.service.StatisticsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
@@ -31,7 +30,7 @@ public class StatisticsServiceImpl implements StatisticsService {
         var paging = PageRequest.of(pageNo, pageSize);
 
         var result = mcqStatisticsRepository.findTotalAttempt(paging);
-        StatisticsResponse<List<MCQStatisticsDto>> statisticsResponse = new StatisticsResponse();
+        StatisticsResponse<List<MCQStatisticsDto>> statisticsResponse = new StatisticsResponse<>();
         statisticsResponse.setData(result.get().toList());
         statisticsResponse.setPageSize(pageSize);
         statisticsResponse.setPageNo(pageNo);
@@ -44,7 +43,7 @@ public class StatisticsServiceImpl implements StatisticsService {
         var paging = PageRequest.of(pageNo, pageSize);
         var result = topicSkillStatisticsRepository.findTotalAttempt(paging);
 
-        StatisticsResponse<List<TopicSkillStatisticsDto>> statisticsResponse = new StatisticsResponse();
+        StatisticsResponse<List<TopicSkillStatisticsDto>> statisticsResponse = new StatisticsResponse<>();
         statisticsResponse.setData(result.get().toList());
         statisticsResponse.setPageSize(pageSize);
         statisticsResponse.setPageNo(pageNo);
