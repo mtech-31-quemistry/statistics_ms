@@ -1,13 +1,17 @@
 package com.quemistry.statistics_ms.controller;
 
+import com.quemistry.statistics_ms.model.MCQStatisticsDto;
 import com.quemistry.statistics_ms.model.StatisticsRequest;
 import com.quemistry.statistics_ms.model.StatisticsResponse;
+import com.quemistry.statistics_ms.model.TopicSkillStatisticsDto;
 import com.quemistry.statistics_ms.service.StatisticsService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/v1/stats")
@@ -20,8 +24,14 @@ public class StatisticsController {
     }
 
     @GetMapping("mcq")
-    public ResponseEntity<StatisticsResponse> getMcqStatistics(@RequestBody StatisticsRequest request){
+    public ResponseEntity<StatisticsResponse<List<MCQStatisticsDto>>> getMcqStatistics(@RequestBody StatisticsRequest request){
         var result = statisticsService.retrieveMcqStatics(request.getPageNo(), request.getPageSize());
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("topic-skill")
+    public ResponseEntity<StatisticsResponse<List<TopicSkillStatisticsDto>>> getTopicSkillStatistics(@RequestBody StatisticsRequest request){
+        var result = statisticsService.retrieveTopicSkillStatics(request.getPageNo(), request.getPageSize());
         return ResponseEntity.ok(result);
     }
 }

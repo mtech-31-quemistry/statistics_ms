@@ -2,6 +2,7 @@ package com.quemistry.statistics_ms.controller;
 
 import com.quemistry.statistics_ms.model.MCQStatisticsDto;
 import com.quemistry.statistics_ms.model.StatisticsResponse;
+import com.quemistry.statistics_ms.model.TopicSkillStatisticsDto;
 import com.quemistry.statistics_ms.service.StatisticsService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -60,5 +61,32 @@ public class StatisticsControllerTest {
                       """));
 
         verify(statisticsService).retrieveMcqStatics(pageNo, pageSize);
+    }
+
+    @Test
+    void givenGetTopicSkillStatistics_thenStatus200() throws Exception {
+        int pageNo = 0;
+        int pageSize = 5;
+        List<TopicSkillStatisticsDto> tsStatisticsList = new ArrayList<>();
+        tsStatisticsList.add(new TopicSkillStatisticsDto(1,"topic A",1, "skill A", 10,9));
+
+        StatisticsResponse response = new StatisticsResponse();
+        response.setPageSize(pageSize);
+        response.setPageNo(pageNo);
+        response.setTotalRecords(1);
+        response.setData(tsStatisticsList);
+
+        when(statisticsService.retrieveTopicSkillStatics(pageNo, pageSize)).thenReturn(response);
+
+        mockMvc.perform(get("/v1/stats/topic-skill")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("""
+                        {
+                            "pageNo": "0",
+                            "pageSize": "5"
+                        }
+                      """));
+
+        verify(statisticsService).retrieveTopicSkillStatics(pageNo, pageSize);
     }
 }

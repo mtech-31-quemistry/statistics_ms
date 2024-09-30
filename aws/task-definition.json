@@ -48,9 +48,9 @@
         }
     ],
     "family": "quemistry-ms-statistics",
-    "executionRoleArn": "arn:aws:iam::730335183958:role/ecsTaskExecutionRole",
+    "executionRoleArn": "arn:aws:iam::730335183958:role/EcsFargateExecutionRole",
     "networkMode": "awsvpc",
-    "revision": 1,
+    "revision": 3,
     "volumes": [],
     "status": "ACTIVE",
     "requiresAttributes": [

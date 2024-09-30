@@ -21,5 +21,6 @@ public interface McqStatisticsRepository extends ReadOnlyRepository<MCQStatistic
                 SELECT COUNT(s.mcqId ) FROM MCQStatistics s GROUP BY s.mcqId
             """)
     Page<MCQStatisticsDto> findTotalAttempt(Pageable pageable);
+
 }
 

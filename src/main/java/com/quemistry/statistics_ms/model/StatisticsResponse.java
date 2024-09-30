@@ -9,9 +9,9 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class StatisticsResponse {
+public class StatisticsResponse<T> {
 
-    private List<MCQStatisticsDto> data;
+    private T data;
     private int pageNo;
     private int pageSize;
     private long totalRecords;
