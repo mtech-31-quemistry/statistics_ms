@@ -15,7 +15,7 @@ public interface McqStatisticsRepository extends ReadOnlyRepository<MCQStatistic
             SELECT new com.quemistry.statistics_ms.model.MCQStatisticsDto(s.mcqId, SUM(s.cntAttempt), SUM(s.cntCorrectAnswer))
             FROM MCQStatistics s
             GROUP BY s.mcqId
-            ORDER BY (SUM(s.cntCorrectAnswer)/SUM(s.cntAttempt))
+            ORDER BY (SUM(s.cntCorrectAnswer)/SUM(s.cntAttempt)) ASC, SUM(s.cntAttempt) DESC
             """ ,
             countQuery = """
                 SELECT COUNT(s.mcqId ) FROM MCQStatistics s GROUP BY s.mcqId

@@ -15,7 +15,7 @@ public interface TopicSkillStatisticsRepository extends ReadOnlyRepository<Topic
             SELECT new com.quemistry.statistics_ms.model.TopicSkillStatisticsDto(s.topicId, s.topicName, s.skillId, s.skillName, SUM(s.cntAttempt), SUM(s.cntCorrectAnswer))
             FROM TopicSkillStatistics s
             GROUP BY s.topicId, s.topicName, s.skillId, s.skillName
-            ORDER BY (SUM(s.cntCorrectAnswer)/SUM(s.cntAttempt))
+            ORDER BY (SUM(s.cntCorrectAnswer)/SUM(s.cntAttempt)) ASC,SUM(s.cntAttempt) DESC 
             """ ,
             countQuery = """
                 SELECT COUNT(s.skillId ) FROM TopicSkillStatistics s
