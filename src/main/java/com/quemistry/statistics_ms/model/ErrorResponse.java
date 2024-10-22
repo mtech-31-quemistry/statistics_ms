@@ -1,4 +1,4 @@
-package com.quemistry.statistics_ms.exception;
+package com.quemistry.statistics_ms.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -75,7 +75,6 @@ jacocoTestReport {
 
 	afterEvaluate {
 		excludedClassFilesForReport(classDirectories)
-
 	}
 }
 
@@ -113,7 +112,7 @@ sonar {
 		property "sonar.projectKey", "mtech-31-quemistry_statistics_ms"
 		property "sonar.organization", "mtech-31-quemistry"
 		property "sonar.host.url", "https://sonarcloud.io"
-		property "sonar.coverage.exclusions", "**/entity/*,**/model/**/*,**/model/*,**/entity/**/*,**/Application,**/constant/**/*,**/constant/*,com/quemistry/statistics_ms/exception/ErrorResponse"
+		property "sonar.coverage.exclusions", "**/entity/*,**/model/**/*,**/model/*,**/entity/**/*,**/Application,**/constant/**/*,**/constant/*"
 	}
 }
 
